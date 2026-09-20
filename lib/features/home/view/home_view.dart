@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wrist_sync/core/constants/app_colors.dart';
+import 'package:wrist_sync/core/widgets/app_button.dart';
+import 'package:wrist_sync/core/widgets/app_card.dart';
+import 'package:wrist_sync/core/widgets/app_header.dart';
+import 'package:wrist_sync/core/widgets/app_icon_badge.dart';
 import 'package:wrist_sync/features/home/controller/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -8,55 +12,47 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'Smart Watch App',
-          style: TextStyle(
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
-        ),
-      ),
+      appBar: const AppHeader(title: "Smart Watch App", showBackButton: false),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
+          padding: const .all(20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
-              const Text(
+              Text(
                 'Connect, customize, and manage your watch',
-                style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                style: textTheme.bodyMedium,
               ),
               const SizedBox(height: 24),
-              _buildHeroCard(),
+              _buildHeroCard(context),
               const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
-                    child: _buildActionCard(
-                      'My Watches',
-                      'View & Manage Devices',
-                      Icons.watch_rounded,
+                    child: _buildActionTile(
+                      context,
+                      title: 'My Watches',
+                      subtitle: 'View & Manage Devices',
+                      icon: Icons.watch_rounded,
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: _buildActionCard(
-                      'Watch Faces',
-                      'Explore New Faces Styles',
-                      Icons.palette_outlined,
+                    child: _buildActionTile(
+                      context,
+                      title: 'Watch Faces',
+                      subtitle: 'Explore New Faces Styles',
+                      icon: Icons.palette_outlined,
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 30),
-              _buildHelpCard(),
+              _buildHelpCard(context),
             ],
           ),
         ),
@@ -64,63 +60,40 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildHeroCard() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.primary,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.15),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
+  Widget _buildHeroCard(BuildContext context) {
+    final theme = Theme.of(context);
+    return AppCard(
+      backgroundColor: theme.colorScheme.primary,
+      padding: const .all(20),
       child: Row(
         children: [
           Expanded(
             flex: 3,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
-                const Text(
+                Text(
                   'Connect Your Watch',
-                  style: TextStyle(
+                  style: theme.textTheme.titleLarge?.copyWith(
                     color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Pair your smart watch to get started',
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.8),
-                    fontSize: 13,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: Colors.white70,
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
+                AppButton(
+                  text: "Connect Now >",
                   onPressed: controller.navigateToSelection,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.accent,
-                    foregroundColor: AppColors.primary,
-                    minimumSize: const Size(140, 45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    'Connect Now >',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 15),
           Expanded(
             flex: 2,
             child: ClipRRect(
@@ -136,89 +109,50 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildActionCard(String title, String subtitle, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.borderEnabled.withValues(alpha: 0.5),
-        ),
-      ),
+  Widget _buildActionTile(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required IconData icon,
+  }) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return AppCard(
+      onTap: () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: AppColors.accent.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: AppColors.primary, size: 28),
-          ),
+          AppIconBadge(icon: icon),
           const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(
-              color: AppColors.textPrimary,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
+          Text(title, style: textTheme.bodyLarge),
           const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 12,
-            ),
-            maxLines: 2,
-          ),
+          Text(subtitle, style: textTheme.bodySmall, maxLines: 2),
         ],
       ),
     );
   }
 
-  Widget _buildHelpCard() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.cardColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.borderEnabled.withValues(alpha: 0.5),
-        ),
-      ),
+  Widget _buildHelpCard(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return AppCard(
+      onTap: () {},
       child: Row(
         children: [
-          const Icon(Icons.info_outline, color: AppColors.textSecondary),
+          Icon(Icons.info_outline, color: textTheme.bodySmall?.color),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
-                Text(
-                  'Need help connecting?',
-                  style: TextStyle(
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'View the quick setup guide.',
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 12,
-                  ),
-                ),
+                Text('Need help connecting?', style: textTheme.bodyLarge),
+                Text('View the quick setup guide.', style: textTheme.bodySmall),
               ],
             ),
           ),
-          const Icon(
+          Icon(
             Icons.arrow_forward_ios,
             size: 14,
-            color: AppColors.textSecondary,
+            color: textTheme.bodySmall?.color,
           ),
         ],
       ),

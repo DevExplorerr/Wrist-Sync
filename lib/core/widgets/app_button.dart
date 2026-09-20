@@ -22,11 +22,6 @@ class AppButton extends StatelessWidget {
     if (isOutlined) {
       return OutlinedButton(
         onPressed: isLoading ? () {} : onPressed,
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(color: theme.colorScheme.primary),
-          minimumSize: const Size(double.infinity, 54),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        ),
         child: _buildChild(theme),
       );
     }
@@ -40,7 +35,9 @@ class AppButton extends StatelessWidget {
   Widget _buildChild(ThemeData theme) {
     if (isLoading) {
       return LoadingAnimationWidget.staggeredDotsWave(
-        color: isOutlined ? theme.colorScheme.primary : theme.colorScheme.primary,
+        color: isOutlined
+            ? theme.colorScheme.primary
+            : theme.colorScheme.primary,
         size: 24,
       );
     }
@@ -48,7 +45,9 @@ class AppButton extends StatelessWidget {
       text,
       style: TextStyle(
         fontWeight: FontWeight.bold,
-        color: isOutlined ? theme.colorScheme.primary : theme.colorScheme.primary,
+        color: isOutlined
+            ? theme.colorScheme.secondary
+            : theme.colorScheme.primary,
       ),
     );
   }

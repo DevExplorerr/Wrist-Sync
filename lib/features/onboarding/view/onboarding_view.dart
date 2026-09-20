@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wrist_sync/core/constants/app_colors.dart';
+import 'package:wrist_sync/core/widgets/app_button.dart';
 import 'package:wrist_sync/features/onboarding/controller/onboarding_controller.dart';
 
 class OnboardingView extends GetView<OnboardingController> {
@@ -39,27 +40,10 @@ class OnboardingView extends GetView<OnboardingController> {
                 ),
               ),
               const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: controller.completeOnboarding,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.accent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Text(
-                    'Get Started',
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Rubik',
-                    ),
-                  ),
-                ),
+              AppButton(
+                text: "Get Started",
+                onPressed: controller.completeOnboarding,
+                isOutlined: true,
               ),
             ],
           ),
