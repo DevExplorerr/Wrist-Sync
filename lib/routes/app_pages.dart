@@ -3,6 +3,8 @@ import 'package:wrist_sync/features/home/bindings/home_binding.dart';
 import 'package:wrist_sync/features/home/view/home_view.dart';
 import 'package:wrist_sync/features/onboarding/controller/onboarding_controller.dart';
 import 'package:wrist_sync/features/onboarding/view/onboarding_view.dart';
+import 'package:wrist_sync/features/scan/bindings/scan_binding.dart';
+import 'package:wrist_sync/features/scan/view/scan_view.dart';
 import 'package:wrist_sync/features/selection/binding/selection_binding.dart';
 import 'package:wrist_sync/features/selection/view/selection_view.dart';
 import 'package:wrist_sync/features/splash/controller/splash_controller.dart';
@@ -35,6 +37,11 @@ class AppPages {
       name: AppRoutes.selection,
       page: () => const SelectionView(),
       binding: SelectionBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.scan,
+      page: () => const ScanView(),
+      binding: ScanBinding(),
     ),
   ];
 }

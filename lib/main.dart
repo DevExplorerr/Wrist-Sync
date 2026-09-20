@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wrist_sync/core/theme/app_theme.dart';
-import 'package:wrist_sync/routes/app_pages.dart';
-import 'package:wrist_sync/routes/app_routes.dart';
 
-void main() {
-  runApp(const WristSync());
-}
+import 'core/theme/app_theme.dart';
+import 'routes/app_pages.dart';
+import 'routes/app_routes.dart';
+import 'core/services/ble_service.dart';
 
-class WristSync extends StatelessWidget {
-  const WristSync({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Wrist Sync',
-      debugShowCheckedModeBanner: false,
-      defaultTransition: .cupertino,
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Get.put(BleService(), permanent: true);
+
+  runApp(
+    GetMaterialApp(
+      title: 'WristSync',
       theme: AppTheme.appTheme,
+      initialRoute: AppRoutes.splash,
       getPages: AppPages.pages,
-      initialRoute: AppRoutes.splash
-    );
-  }
+      debugShowCheckedModeBanner: false,
+    ),
+  );
 }
