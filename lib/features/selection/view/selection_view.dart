@@ -46,7 +46,7 @@ class SelectionView extends GetView<SelectionController> {
                       context,
                       icon: Icons.watch_outlined,
                       title: 'Smart Watches',
-                      subtitle: 'Connect Fitpro Smart Watch and other Huawei smartwatches.',
+                      subtitle: 'Connect Wrist Sync Smart Watch and other Huawei smartwatches.',
                       onTap: () => controller.selectDeviceType('smart_watch'),
                     ),
                     const SizedBox(height: 16),
