@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:wrist_sync/features/device_info/bindings/device_info_binding.dart';
+import 'package:wrist_sync/features/device_info/views/device_info_view.dart';
 import 'package:wrist_sync/features/home/bindings/home_binding.dart';
 import 'package:wrist_sync/features/home/view/home_view.dart';
 import 'package:wrist_sync/features/onboarding/controller/onboarding_controller.dart';
@@ -42,6 +44,11 @@ class AppPages {
       name: AppRoutes.scan,
       page: () => const ScanView(),
       binding: ScanBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.deviceInfo,
+      page: () => const DeviceInfoView(),
+      binding: DeviceInfoBinding(),
     ),
   ];
 }
